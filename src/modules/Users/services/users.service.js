@@ -7,7 +7,7 @@ export class UserService {
 
   static getByEmail(email) {
     return User.findOne({
-      where: { email }
-    })
+      where: { email },
+    });
   }
 }

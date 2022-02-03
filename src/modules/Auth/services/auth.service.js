@@ -1,17 +1,18 @@
 import * as bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-import { UserService } from '../../Users/services/users.services';
+import { UserService } from '../../Users';
 
 export class AuthService {
   static async login(email, password) {
     try {
-      const {id, password: hash} = await UserService.getByEmail(email);
-      if(id && this.validatePassword(password, hash)) {
+      const { id, password: hash } = await UserService.getByEmail(email);
+      if (id && this.validatePassword(password, hash)) {
         return {
-          token: jwt.sign({id}, 'secret')
-        }
+          token: jwt.sign({ id }, 'secret'),
+        };
       }
+      throw new Error('Credenciales incorrectas');
     } catch (error) {
       throw new Error('Credenciales incorrectas');
     }

@@ -1,7 +1,6 @@
-import { Sequelize } from "sequelize";
-import * as bcrypt from "bcryptjs";
+import { Sequelize } from 'sequelize';
 
-import {configDb} from '../config/environment';
+import { configDb } from '../config/environment';
 
 const sequelize = new Sequelize(
   configDb.database,
@@ -16,21 +15,30 @@ const sequelize = new Sequelize(
     },
     sync: {
       force: false,
-    }
-  }
+    },
+  },
 );
 
 export const User = sequelize.import(`${__dirname}/../models/user.model`);
-// export const GeneralData = sequelize.import(`${__dirname}/../models/generalData.model`);
-// export const PreviousSitutation = sequelize.import(`${__dirname}/../models/previousSitutation.model`);
+export const Group = sequelize.import(`${__dirname}/../models/group.model`);
+export const Partner = sequelize.import(`${__dirname}/../models/parther.model`);
+export const Thematic = sequelize.import(`${__dirname}/../models/thematic.model`);
+export const Question = sequelize.import(`${__dirname}/../models/question.model`);
+export const Response = sequelize.import(`${__dirname}/../models/response.model`);
 
-// User.hasOne(GeneralData);
-// GeneralData.belongsTo(User);
+Group.hasMany(Thematic);
+Thematic.belongsTo(Group);
 
-// User.hasOne(PreviousSitutation);
-// PreviousSitutation.belongsTo(User);
+Thematic.hasMany(Question);
+Question.belongsTo(Thematic);
+
+User.hasMany(Response);
+Response.belongsTo(User);
+
+Question.hasMany(Response);
+Response.belongsTo(Question);
+
+User.hasMany(Partner);
+Partner.belongsTo(User);
 
 sequelize.sync();
-
-
-
