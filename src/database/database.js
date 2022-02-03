@@ -21,14 +21,14 @@ const sequelize = new Sequelize(
 );
 
 export const User = sequelize.import(`${__dirname}/../models/user.model`);
-export const GeneralData = sequelize.import(`${__dirname}/../models/generalData.model`);
-export const PreviousSitutation = sequelize.import(`${__dirname}/../models/previousSitutation.model`);
+// export const GeneralData = sequelize.import(`${__dirname}/../models/generalData.model`);
+// export const PreviousSitutation = sequelize.import(`${__dirname}/../models/previousSitutation.model`);
 
-User.hasOne(GeneralData);
-GeneralData.belongsTo(User);
+// User.hasOne(GeneralData);
+// GeneralData.belongsTo(User);
 
-User.hasOne(PreviousSitutation);
-PreviousSitutation.belongsTo(User);
+// User.hasOne(PreviousSitutation);
+// PreviousSitutation.belongsTo(User);
 
 sequelize.sync();
 
