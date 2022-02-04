@@ -1,32 +1,42 @@
 import { GroupService } from '../services';
 
 export class GroupController {
-  static async getById(req, res) {
+  constructor() {
+    this.service = new GroupService();
+
+    this.getById = this.getById.bind(this);
+    this.getAlls = this.getAlls.bind(this);
+    this.create = this.create.bind(this);
+  }
+
+  async getById(req, res) {
     try {
       const { id } = req.params;
-      return GroupService.getById(id);
+      res.json(await this.service.getById(id));
     } catch (error) {
-      return res.status(500).send({ error });
+      res.status(500).send({ error });
     }
   }
 
-  static async getAlls(req, res) {
+  async getAlls(req, res) {
     try {
-      return GroupService.getAll();
+      res.json(await this.service.getAll());
     } catch (error) {
-      return res.status(500).send({ error });
+      res.status(500).send({ error });
     }
   }
 
-  static async create(req, res) {
+  async create(req, res) {
     try {
-      const { name, code } = req.body;
-      if (name && code) {
-        return GroupService.create({ name, code });
+      const { name } = req.body;
+      if (name) {
+        await this.service.create({ name });
+        res.json({ status: 'Ok' });
       }
-      return res.status(400).send({ error: 'Bad Request' });
+      res.status(400).send({ error: 'Bad Request' });
     } catch (error) {
-      return res.status(500).send({ error });
+      console.log(error);
+      res.status(500).send({ error });
     }
   }
 }

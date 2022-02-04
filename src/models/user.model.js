@@ -9,6 +9,10 @@ module.exports = (sequelize) => sequelize.define('user', {
     type: Sequelize.TEXT,
     allowNull: false,
   },
+  status: {
+    type: Sequelize.INTEGER,
+    default: 0,
+  },
 }, {
   timestamps: true,
 });

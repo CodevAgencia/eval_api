@@ -10,4 +10,14 @@ export class AuthController {
       res.status(401).send(error);
     }
   }
+
+  static async refeshController(req, res) {
+    try {
+      const { token } = req.body;
+      const response = await AuthService.refresh(token);
+      res.json(response);
+    } catch (error) {
+      res.status(401).send(error);
+    }
+  }
 }

@@ -1,29 +1,36 @@
 export class Service {
   constructor(Entity) {
-    this.entity = new Entity();
+    this.entity = Entity;
+
+    this.getById = this.getById.bind(this);
+    this.getOne = this.getOne.bind(this);
+    this.getAllWithFilter = this.getAllWithFilter.bind(this);
+    this.getAll = this.getAll.bind(this);
+    this.create = this.create.bind(this);
   }
 
-  static getById(id) {
+  getById(id) {
     return this.entity.findByPk(id);
   }
 
-  static getOne(filters) {
+  getOne(filters) {
     return this.entity.findOne({
       where: filters,
     });
   }
 
-  static getAll() {
+  getAll() {
+    console.log(this.entity);
     return this.entity.findAll();
   }
 
-  static getAllWithFilter(filters) {
+  getAllWithFilter(filters) {
     return this.entity.findAll({
       where: filters,
     });
   }
 
-  static create(data) {
+  create(data) {
     return this.entity.create(data);
   }
 }

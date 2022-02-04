@@ -21,7 +21,7 @@ const sequelize = new Sequelize(
 
 export const User = sequelize.import(`${__dirname}/../models/user.model`);
 export const Group = sequelize.import(`${__dirname}/../models/group.model`);
-export const Partner = sequelize.import(`${__dirname}/../models/parther.model`);
+export const Partner = sequelize.import(`${__dirname}/../models/partner.model`);
 export const Thematic = sequelize.import(`${__dirname}/../models/thematic.model`);
 export const Question = sequelize.import(`${__dirname}/../models/question.model`);
 export const Response = sequelize.import(`${__dirname}/../models/response.model`);

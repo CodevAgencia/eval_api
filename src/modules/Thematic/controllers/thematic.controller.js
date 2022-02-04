@@ -1,33 +1,43 @@
 import { ThematicService } from '../services';
 
 export class ThematicController {
-  static async getById(req, res) {
+  constructor() {
+    this.service = new ThematicService();
+
+    this.create = this.create.bind(this);
+    this.getByGroupId = this.getByGroupId.bind(this);
+    this.getById = this.getById.bind(this);
+  }
+
+  async getById(req, res) {
     try {
       const { id } = req.params;
-      return ThematicService.getById(id);
+      res.json(await this.service.getById(id));
     } catch (error) {
-      return res.status(500).send({ error });
+      res.status(500).send({ error });
     }
   }
 
-  static async getByGroupId(req, res) {
+  async getByGroupId(req, res) {
     try {
       const { groupId } = req.params;
-      return ThematicService.getAllWithFilter({ groupId });
+      res.json(await this.service.getAllWithFilter({ groupId }));
     } catch (error) {
-      return res.status(500).send({ error });
+      res.status(500).send({ error });
     }
   }
 
-  static async create(req, res) {
+  async create(req, res) {
     try {
       const { groupId, name, code } = req.body;
       if (groupId && name && code) {
-        return ThematicService.create({ groupId, name, code });
+        await this.service.create({ groupId, name, code });
+        res.send({ status: 'Ok' });
+        return;
       }
-      return res.status(400).send({ error: 'Bad Request' });
+      res.status(400).send({ error: 'Bad Request' });
     } catch (error) {
-      return res.status(500).send({ error });
+      res.status(500).send({ error });
     }
   }
 }
