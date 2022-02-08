@@ -15,7 +15,7 @@ module.exports = (sequelize) => sequelize.define('questions', {
   },
   type: {
     type: Sequelize.ENUM([
-      'TEXT', 'DATE', 'LIST', 'BOOLEAN', 'NUMBER', 'TABLE_TEAM_TEXT', 'TABLE_TEAM_BOOLEAN', 'TABLE_TEAM_NUMBER', 'TABLE_TEAM_DATE', 'TABLE_TEAM_LIST',
+      'TEXT', 'DATE', 'LIST', 'BOOLEAN', 'NUMBER', 'DOUBLE', 'TABLE_TEAM_TEXT', 'TABLE_TEAM_BOOLEAN', 'TABLE_TEAM_NUMBER', 'TABLE_TEAM_DATE', 'TABLE_TEAM_LIST',
     ]),
     allowNull: false,
   },

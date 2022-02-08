@@ -1,12 +1,15 @@
+import { Service } from '../../../common';
 import { User } from '../../../database/database';
 
-export class UserService {
-  static getById(id) {
-    return User.findByPk(id);
+export class UserService extends Service {
+  constructor() {
+    super(User);
+
+    this.getByEmail = this.getByEmail.bind(this);
   }
 
-  static getByEmail(email) {
-    return User.findOne({
+  getByEmail(email) {
+    return this.entity.findOne({
       where: { email },
     });
   }

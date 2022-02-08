@@ -40,7 +40,7 @@ export class FormService {
         response: await this.getResponseOfQuestion(q.id, userId),
       })));
       return {
-        thematc: {
+        thematic: {
           id: t.id,
           name: t.name,
           code: t.code,
@@ -49,5 +49,19 @@ export class FormService {
         },
       };
     }));
+  }
+
+  async saveResponses({ responses, userId }) {
+    const registerToSave = responses.map((r) => ({
+      id: r.id,
+      questionId: r.questionId,
+      value: r.value,
+      userId,
+    }));
+    await Promise.all(registerToSave.map((r) => this.responseService.updateOrCreate(r.id, {
+      questionId: r.questionId,
+      value: r.value,
+      userId,
+    })));
   }
 }

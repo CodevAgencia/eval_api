@@ -6,7 +6,7 @@ export class PartnerService {
   }
 
   static getByUserId(userId) {
-    return Partner.findOne({
+    return Partner.findAll({
       where: { userId },
     });
   }

@@ -7,6 +7,8 @@ export class Service {
     this.getAllWithFilter = this.getAllWithFilter.bind(this);
     this.getAll = this.getAll.bind(this);
     this.create = this.create.bind(this);
+    this.bulkCreate = this.bulkCreate.bind(this);
+    this.update = this.update.bind(this);
   }
 
   getById(id) {
@@ -20,7 +22,6 @@ export class Service {
   }
 
   getAll() {
-    console.log(this.entity);
     return this.entity.findAll();
   }
 
@@ -32,5 +33,15 @@ export class Service {
 
   create(data) {
     return this.entity.create(data);
+  }
+
+  bulkCreate(data) {
+    return this.entity.bulkCreate(data);
+  }
+
+  update(data, conditions) {
+    return this.entity.update(data, {
+      where: conditions,
+    });
   }
 }
