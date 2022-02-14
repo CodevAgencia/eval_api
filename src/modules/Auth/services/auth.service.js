@@ -21,10 +21,12 @@ export class AuthService {
 
   async login(email, password) {
     try {
-      const { id, password: hash, status } = await this.userService.getByEmail(email);
+      const {
+        id, password: hash, status, role,
+      } = await this.userService.getByEmail(email);
       if (id && this.validatePassword(password, hash)) {
         return {
-          token: jwt.sign({ id, status }, 'secret'),
+          token: jwt.sign({ id, status, role }, 'secret'),
         };
       }
       throw new Error('Credenciales incorrectas');
@@ -37,9 +39,9 @@ export class AuthService {
     try {
       const { id } = this.validateToken(token);
       if (id) {
-        const { status } = await this.userService.getById(id);
+        const { status, role } = await this.userService.getById(id);
         return {
-          token: jwt.sign({ id, status }, 'secret'),
+          token: jwt.sign({ id, status, role }, 'secret'),
         };
       }
       throw new Error('Credenciales incorrectas');

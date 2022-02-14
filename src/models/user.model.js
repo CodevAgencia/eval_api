@@ -5,6 +5,10 @@ module.exports = (sequelize) => sequelize.define('user', {
     type: Sequelize.TEXT,
     allowNull: false,
   },
+  role: {
+    type: Sequelize.TEXT,
+    allowNull: true,
+  },
   password: {
     type: Sequelize.TEXT,
     allowNull: false,
