@@ -5,9 +5,9 @@ import express, { json } from 'express';
 import { FormRouter } from '../Form';
 import { AuthRouter } from '../Auth';
 import { GroupRouter } from '../Group';
-import { PartnerRouter } from '../Users';
 import { QuestionRouter } from '../Question';
 import { ThematicRouter } from '../Thematic';
+import { PartnerRouter, UserRouter } from '../Users';
 
 export const app = express();
 
@@ -21,6 +21,7 @@ app.use('/api/thematic', ThematicRouter);
 app.use('/api/group', GroupRouter);
 app.use('/api/partner', PartnerRouter);
 app.use('/api/question', QuestionRouter);
+app.use('/api/user', UserRouter);
 
 app.get('/', (req, res) => {
   res.json({
