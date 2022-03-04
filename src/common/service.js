@@ -40,7 +40,10 @@ export class Service {
   }
 
   update(data, conditions) {
-    return this.entity.update(data, {
+    return this.entity.update({
+      ...data,
+      updatedAt: new Date(),
+    }, {
       where: conditions,
     });
   }

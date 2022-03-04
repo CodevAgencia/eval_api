@@ -44,7 +44,7 @@ export class UserService extends Service {
         id: user.id,
         name: response?.value,
         email: user.email,
-        createdAt: user.createdAt,
+        createdAt: user.updatedAt,
         status: GROUPS_FORM[user.status],
       };
     }));
