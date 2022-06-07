@@ -7,4 +7,4 @@ const controller = new UserController();
 export const UserRouter = new Router();
 
 UserRouter.get('/entrepreneurs', controller.getAllEntrepreneurs);
-UserRouter.get('/results/:id', controller.getResults);
+UserRouter.get('/results/:userId', controller.getResults);

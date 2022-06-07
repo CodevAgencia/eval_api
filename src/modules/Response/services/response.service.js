@@ -1,11 +1,12 @@
 import { Service } from '../../../common';
-import { Response } from '../../../database/database';
+import { Response, Question, Thematic } from '../../../database/database';
 
 export class ResponseService extends Service {
   constructor() {
     super(Response);
 
     this.updateOrCreate = this.updateOrCreate.bind(this);
+    this.findAllWithResponse = this.findAllWithResponse.bind(this);
   }
 
   async updateOrCreate(id, data) {
@@ -25,5 +26,24 @@ export class ResponseService extends Service {
       return;
     }
     await this.entity.create(data);
+  }
+
+  findAllWithResponse(userId, thematic) {
+    return this.entity.findAll({
+      where: {
+        userId,
+      },
+      include: [{
+        model: Question,
+        required: true,
+        include: [{
+          model: Thematic,
+          required: true,
+          where: {
+            id: thematic,
+          },
+        }],
+      }],
+    });
   }
 }

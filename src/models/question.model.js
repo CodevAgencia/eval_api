@@ -35,6 +35,14 @@ module.exports = (sequelize) => sequelize.define('questions', {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  subtema: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  percentage: {
+    type: Sequelize.FLOAT,
+    allowNull: true,
+  },
 }, {
   timestamps: true,
 });

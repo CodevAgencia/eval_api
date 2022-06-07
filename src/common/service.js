@@ -26,9 +26,14 @@ export class Service {
   }
 
   getAllWithFilter(filters) {
-    return this.entity.findAll({
-      where: filters,
-    });
+    try {
+      return this.entity.findAll({
+        where: filters,
+      });
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 
   create(data) {

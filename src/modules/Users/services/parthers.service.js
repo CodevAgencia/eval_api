@@ -19,8 +19,10 @@ export class PartnerService {
 
   static addPartner(userId, partner) {
     return Partner.findOrCreate({
-      name: partner,
-      userId,
+      where: {
+        name: partner,
+        userId,
+      },
     });
   }
 }
