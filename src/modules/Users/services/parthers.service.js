@@ -1,28 +1,39 @@
+import { Service } from '../../../common';
 import { Partner } from '../../../database/database';
 
-export class PartnerService {
-  static getById(id) {
-    return Partner.findByPk(id);
+export class PartnerService extends Service {
+  constructor() {
+    super(Partner);
   }
 
-  static getByUserId(userId) {
-    return Partner.findAll({
+  getById(id) {
+    return this.entity.findByPk(id);
+  }
+
+  getByUserId(userId) {
+    return this.entity.findAll({
       where: { userId },
     });
   }
 
-  static getPartnersByUserId(userId) {
-    return Partner.find({
+  getPartnersByUserId(userId) {
+    return this.entity.find({
       where: { userId },
     });
   }
 
-  static addPartner(userId, partner) {
-    return Partner.findOrCreate({
+  addPartner(userId, partner) {
+    return this.entity.findOrCreate({
       where: {
         name: partner,
         userId,
       },
+    });
+  }
+
+  removePartners(userId) {
+    return this.entity.destroy({
+      where: { userId },
     });
   }
 }

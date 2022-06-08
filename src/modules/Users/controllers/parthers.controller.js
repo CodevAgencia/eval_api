@@ -1,26 +1,36 @@
-import { PartnerService } from '../services';
+import { PartnerService, UserService } from '../services';
 
 // api/partner
 export class PartnerController {
-  static async getParthers(req, res) {
+  constructor() {
+    this.userService = new UserService();
+    this.partnerService = new PartnerService();
+
+    this.addPartners = this.addPartners.bind(this);
+    this.getParthers = this.getParthers.bind(this);
+  }
+
+  async getParthers(req, res) {
     try {
       const { userId } = req.params;
-      const response = await PartnerService.getByUserId(userId);
+      const response = await this.partnerService.getByUserId(userId);
       res.json(response);
     } catch (error) {
       res.status(500).json({ error });
     }
   }
 
-  static async addPartners(req, res) {
+  async addPartners(req, res) {
     try {
       const { userId, parthers } = req.body;
       if (!userId || !parthers || parthers.length < 1) {
         res.status(400).json({ error: 'Bad request' });
       }
-      await Promise.all(parthers.map((p) => PartnerService.addPartner(userId, p)));
+      await Promise.all(parthers.map((p) => this.partnerService.addPartner(userId, p)));
+      await this.userService.update({ status: 1 }, { id: userId });
       res.json({ status: 'ok' });
     } catch (error) {
+      console.log("🚀 ~ file: parthers.controller.js ~ line 30 ~ PartnerController ~ addPartners ~ error", error);
       res.status(500).json({ error });
     }
   }
