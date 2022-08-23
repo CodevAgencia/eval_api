@@ -30,7 +30,6 @@ export class PartnerController {
       await this.userService.update({ status: 1 }, { id: userId });
       res.json({ status: 'ok' });
     } catch (error) {
-      console.log("🚀 ~ file: parthers.controller.js ~ line 30 ~ PartnerController ~ addPartners ~ error", error);
       res.status(500).json({ error });
     }
   }
