@@ -31,9 +31,9 @@ export class PartnerService extends Service {
     });
   }
 
-  removePartners(userId) {
+  removePartners(id) {
     return this.entity.destroy({
-      where: { userId },
+      where: { id },
     });
   }
 }

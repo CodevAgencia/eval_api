@@ -1,3 +1,4 @@
+import Sequelize from 'sequelize';
 import { PartnerService, UserService } from '../services';
 
 // api/partner
@@ -27,9 +28,17 @@ export class PartnerController {
         res.status(400).json({ error: 'Bad request' });
       }
       await Promise.all(parthers.map((p) => this.partnerService.addPartner(userId, p)));
+      const toDelete = await this.partnerService.getAllWithFilter({
+        name: {
+          [Sequelize.Op.notIn]: parthers,
+        },
+        userId,
+      });
+      await Promise.all(toDelete.map(p => this.partnerService.removePartners(p.id)));
       await this.userService.update({ status: 1 }, { id: userId });
       res.json({ status: 'ok' });
     } catch (error) {
+      console.log("🚀 ~ file: parthers.controller.js ~ line 39 ~ PartnerController ~ addPartners ~ error", error);
       res.status(500).json({ error });
     }
   }
