@@ -417,43 +417,87 @@ export class UserController {
     //   },
     // ];
 
-    // const totals = [4, 5, 2, 1, 2, 2, 2, 2, 2, 3, 3, 5, 3, 2, 3, 2];
-    // const valuesArray = results.map(({ data }) => data).flat().map(({ values }) => values).map((v) => v.map((obj) => {
-    //   if (obj) { return obj.results; }
-    //   return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    // }));
-    // console.log('🚀 ~ file: users.controller.js ~ line 422 ~ UserController ~ getResults ~ valuesArray', valuesArray);
+    const totals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const valuesArray = results.map(({ data }) => data).flat().map(({ values }) => values).map((v) => v.map((obj) => {
+      if (obj) { return obj.results; }
+      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }));
 
+    valuesArray.flat().forEach((v) => {
+      v.forEach((value, index) => {
+        totals[index] += value;
+      });
+    });
+    const proms = [
+      // Puntaje de equipo
+      totals[0] > 0 ? 0.1 / totals[0] : 0,
+      totals[1] > 0 ? 0.1 / totals[1] : 0,
+      totals[2] > 0 ? 0.1 / totals[2] : 0,
+      totals[3] > 0 ? 0.1 / totals[3] : 0,
+      // Puntaje del acuerdo
+      totals[4] > 0 ? 0.05 / totals[4] : 0,
+      totals[5] > 0 ? 0.05 / totals[5] : 0,
+      totals[6] > 0 ? 0.05 / totals[6] : 0,
+      totals[7] > 0 ? 0.05 / totals[7] : 0,
+      // Puntaje de la Oportunidad
+      totals[8] > 0 ? 0.05 / totals[8] : 0,
+      totals[9] > 0 ? 0.05 / totals[9] : 0,
+      totals[10] > 0 ? 0.05 / totals[10] : 0,
+      totals[11] > 0 ? 0.05 / totals[11] : 0,
+      // Puntaje del Contexto
+      totals[12] > 0 ? 0.05 / totals[12] : 0,
+      totals[13] > 0 ? 0.05 / totals[13] : 0,
+      totals[14] > 0 ? 0.05 / totals[14] : 0,
+      totals[15] > 0 ? 0.05 / totals[15] : 0,
+    ];
+    const calculateds = proms.map((v, i) => Number((v * totals[i]).toFixed(2)));
+    const calculatedsTotal = [
+      // Puntaje de equipo
+      calculateds[0] > 0 ? (0.1 / calculateds[0]) * 5 : 0,
+      calculateds[1] > 0 ? (0.1 / calculateds[1]) * 5 : 0,
+      calculateds[2] > 0 ? (0.1 / calculateds[2]) * 5 : 0,
+      calculateds[3] > 0 ? (0.1 / calculateds[3]) * 5 : 0,
+      // Puntaje del acuerdo
+      calculateds[4] > 0 ? (0.05 / calculateds[4]) * 5 : 0,
+      calculateds[5] > 0 ? (0.05 / calculateds[5]) * 5 : 0,
+      calculateds[6] > 0 ? (0.05 / calculateds[6]) * 5 : 0,
+      calculateds[7] > 0 ? (0.05 / calculateds[7]) * 5 : 0,
+      // Puntaje de la Oportunidad
+      calculateds[8] > 0 ? (0.05 / calculateds[8]) * 5 : 0,
+      calculateds[9] > 0 ? (0.05 / calculateds[9]) * 5 : 0,
+      calculateds[10] > 0 ? (0.05 / calculateds[10]) * 5 : 0,
+      calculateds[11] > 0 ? (0.05 / calculateds[11]) * 5 : 0,
+      // Puntaje del Contexto
+      calculateds[12] > 0 ? (0.05 / calculateds[12]) * 5 : 0,
+      calculateds[13] > 0 ? (0.05 / calculateds[13]) * 5 : 0,
+      calculateds[14] > 0 ? (0.05 / calculateds[14]) * 5 : 0,
+      calculateds[15] > 0 ? (0.05 / calculateds[15]) * 5 : 0,
+    ];
     res.json({
       dataResultTable: results,
       dataTotalTable: [
         {
           id: 1,
           name: 'total',
-          total: 43,
-          results: [4, 5, 2, 1, 2, 2, 2, 2, 2, 3, 3, 5, 3, 2, 3, 2],
+          total: totals.reduce((prev, curr) => prev + curr, 0),
+          results: totals,
         },
         {
           id: 2,
           name: 'Prom',
-          total: 1,
-          results: [
-            0.025, 0.02, 0.05, 0.1, 0.025, 0.025, 0.025, 0.025, 0.025, 0.0167, 0.01666666667, 0.01,
-            0.01666666667, 0.025, 0.01666666667, 0.025,
-          ],
+          total: Number(proms.reduce((prev, curr) => prev + curr, 0).toFixed(2)),
+          results: proms.map((v) => Number(v.toFixed(2))),
         },
         {
           id: 3,
           name: 'calculated',
-          total: 1,
-          results: [
-            0.1, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05,
-          ],
+          total: Number(calculateds.reduce((prev, curr) => prev + curr, 0).toFixed(2)),
+          results: calculateds,
         },
         {
           id: 4,
           name: 'calculated total',
-          results: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+          results: calculatedsTotal.map((v) => Number(v.toFixed(2))),
         },
       ],
     });

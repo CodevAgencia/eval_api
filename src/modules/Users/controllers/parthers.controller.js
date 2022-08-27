@@ -34,11 +34,10 @@ export class PartnerController {
         },
         userId,
       });
-      await Promise.all(toDelete.map(p => this.partnerService.removePartners(p.id)));
+      await Promise.all(toDelete.map((p) => this.partnerService.removePartners(p.id)));
       await this.userService.update({ status: 1 }, { id: userId });
       res.json({ status: 'ok' });
     } catch (error) {
-      console.log("🚀 ~ file: parthers.controller.js ~ line 39 ~ PartnerController ~ addPartners ~ error", error);
       res.status(500).json({ error });
     }
   }
